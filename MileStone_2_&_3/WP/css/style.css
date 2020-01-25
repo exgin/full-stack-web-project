@@ -1,0 +1,245 @@
+
+body{
+    background-image: url("../images/shiney2.jpg");
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.heading{ /* header */
+    grid-column-start: 1;
+    grid-column-end: 6;
+    grid-row-start: 1;
+    grid-row-end: 1; }
+.container-menu { /* menu */
+    position: fixed;
+    top: 140px;
+    grid-column-start: 1;
+    grid-column-end: 1;
+    grid-row-start: 2;
+    grid-row-end: 3; 
+    z-index: 999;
+    
+    }
+.container{ /* main */
+   
+    position: relative;
+    grid-column-start: 2;
+    grid-column-end: 6;
+    grid-row-start: 2;
+    grid-row-end: 6; 
+    margin-right: 150px;
+    float: left;    
+    left: 160px;
+    height:auto;
+    max-width: 100%;
+    align-items: center;
+   
+}
+.menubox{
+    margin: auto;
+    z-index: -1;
+    text-align: center;
+    top: 180px;
+    left:10px;
+    border:5px outset navy;
+    width:120px;
+    height:300px;
+    padding-right:5px;
+    font-size: 1.25rem;
+    background-color: skyblue;
+    font-weight: bold;
+    font-family:Georgia, 'Times New Roman', Times, serif;  
+    float: left; 
+}
+.container-menu{
+    height: auto;
+    width: auto;
+}
+.content{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    top: 0;
+    height: auto;    
+    color:black;
+    font-size: 1.15rem;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    width: auto;
+    margin: auto;
+    float: right;
+    padding-left: 5px;
+    padding-right: 5px;
+    background-image: url("../images/shiney2.jpg");
+}
+.menu{
+    display:block;
+    text-decoration:none;
+    text-align:center;
+    color: black;    
+    font-weight:bolder;
+    font-family:'comic sans ms';
+}
+.menu:hover{
+    color:red;
+    font-style:italic;
+    font-weight:bold;
+    zoom: 1.25;
+    background-color: skyblue;
+    		
+}
+.menutitle{
+    border-bottom:5px ridge navy;
+    padding-bottom: 10px;
+    color: black;
+    font-weight: bolder;
+}
+
+.heading{
+    display: flex;
+    position: relative;
+    color: rgb(10, 10, 19); 
+    font-size: 1.25rem;
+    background-color: skyblue; 
+    height:100px;
+    width: 100%;
+}
+.heading .h2{
+ 
+    position: absolute;
+    margin: 0;
+    top: 25px;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    padding-bottom: 10px;
+}
+
+.logo{
+    top: 5px; 
+    bottom: 5px;
+    left: 5px; 
+    float: left;
+}
+
+/* ******* Below is the style formatting for the dropdown menu *******  */
+
+/* Dropdown container - needed to position the dropdown content 
+.dropdown {
+    float: left;
+    overflow:unset;
+}
+*/
+/* Style the dropdown button to fit inside the topnav */
+
+.dropdown .dropbtn{
+    font-size: 1.1em;
+    border: none;
+    outline: none;
+    color: black;
+    padding: 14px 16px;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+    font-weight: bold;
+}
+
+
+/* Style the dropdown content (hidden by default) */
+.dropdown-content {
+    display: none;
+    position: inherit;
+    background-color: inherit;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* Style the links inside the dropdown */
+.dropdown-content .a {
+    position: relative;	
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    text-align: left;
+    display: flex;
+    background-color: skyblue;
+}
+.dropdown-content:hover .a{
+    display:flex;
+    flex-direction:row;
+}
+/* Add a dark background on topnav links and the dropdown button on hover */
+.a:hover{
+    background-color: skyblue;
+    color: black;
+    border: 2px ridge black;
+    border-bottom: 2px ridge black;
+    zoom: 1.2;			
+    padding: 3px;	
+    height: auto; 
+}	
+.dropdown:hover{
+    background-color: skyblue;
+    color: black;
+    zoom: 1.15;			
+    padding: 3px;	
+    height: auto; 
+}	
+.dropbtn:hover{
+    position: relative;
+    color: red;
+    font-size: 17px;
+    border: none;
+    outline: none;
+    background-color: inherit;
+    font-family: inherit;
+    margin: 0;
+    font-weight: bold;
+}
+
+
+/* Add a grey background to dropdown links on hover */
+.dropdown-content .a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+/* Show the dropdown menu when the user moves the mouse over the dropdown button */
+.dropdown:hover .dropdown-content {
+    display: block;   
+}
+/*-- style for footer element container --*/
+footer	{
+    position: relative;
+	font-size: 1em;
+	color: black;
+    text-align: center;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+
+/*-- style for anchor element within the footer --*/
+footer a 	{
+    color: black;
+    text-decoration: none;
+}
+
+/* Style elements for the forms.php and reports.php */
+.desc{
+    color: blue;
+    font-size: 1.1em;
+}
+.h-link{
+    color: black;
+    font-size: 1.2em;
+    text-decoration: none;
+    font-weight: bold;
+}
+.h-link:hover {
+    color: red;
+    zoom: 1.1;
+    font-weight: bold;
+} 

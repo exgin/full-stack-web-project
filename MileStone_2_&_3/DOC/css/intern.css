@@ -1,0 +1,153 @@
+body{
+    background-image: url("../images/shiney2.jpg");
+}
+.body {
+    display: flex;
+    flex-direction: column;
+    
+    color:black;
+    font-size: 1.15rem;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    max-width: 100%;
+   
+}
+/* Page banner */
+.banner {
+    position:absolute;
+    top:15px;
+    color:navy;
+    padding-left: 190px;
+}
+/* Navigation box */
+.nav {
+    position: fixed;
+    align-content: center;
+    text-align: center;
+    top: 45px;
+    left:10px;
+    border:5px outset navy;
+    width:130px;
+    height:400px;
+    padding:2px;
+    background-color: skyblue;
+    font-family:times;   
+}
+/* Navigation title */
+.menutitle {   
+    border-bottom:5px ridge black; 
+    font-weight:bold;
+    color: navy;   
+    width:100%;
+    margin-top: 125px;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    font-size:1.50rem;
+}
+/* Navigation subtitle */
+.menusubtitle {
+    margin-top: 30px;
+}
+/* Navigation links */
+.nav a {
+    display:block;
+    text-decoration:none;
+    text-align:center;
+    color: navy/*000200*/;    
+    font-weight:bold;
+    font-family:'comic sans ms';
+}
+
+a {
+    text-decoration:none;
+    text-align:center;
+    color:#FFCC33;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    font-size:1.35rem;
+}
+
+a:hover {
+    color:gold;
+    font-style:italic;
+    font-weight:bold;
+    zoom: 1.25;
+   
+}
+/* End Navigation Information */
+
+/* Milestone header wrapper */
+.goldline-box {
+    display: flex;
+    flex-direction: column;
+    margin-top: 8rem;   
+    margin-left: 9rem;       
+    border:none;  
+    z-index:-1;
+    font-family:verdana;
+    font-size:2rem;
+    font-weight:bold;
+    font-style:italic;  
+   
+}
+/* Milestone header underlined */
+.goldline {   
+    border-bottom:3px ridge black;   
+    text-indent: 2.8rem;
+}
+/* Webpage container for everything after navigation */
+.container{    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-content: center;   
+    text-align: left;
+    max-width: auto;  
+    margin-left: 13rem;    
+}
+
+.paragraph{  
+    margin-top: 5rem;
+    padding-left: 50px;
+}
+
+/* Scrollbox content */
+
+.scrollbox{
+    display:block;
+    border-left:10px ridge gray; 
+    border-right:10px ridge gray; 
+    border-top:10px ridge gray; 
+    border-bottom:10px ridge gray; 
+    height: 30vmax;
+    max-width:88%;   
+    font-size:1.20rem;
+    text-align: left;
+    overflow: auto;
+    color: black; 
+    white-space: pre-wrap;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+/* Headline formatting */
+h2{
+    border-bottom:3px ridge black;   
+}
+h3{
+    text-decoration-line: underline;
+}
+
+/* fancybox image style */
+.img {
+    box-shadow: 0 0px 8px #000000;
+    max-width: 88%;
+    height: auto;    
+} 
+/* fancybox image hover style */	
+.img:hover   {
+    position: relative; 
+    z-index: 999; 
+    -o-transform: scale(1.03,1.25); 
+    -ms-transform: scale(1.03,1.25); 
+    -moz-transform: scale(1.03,1.25); 
+    -webkit-transform: scale(1.03,1.25); 
+    transform: scale(1.03,1.25);
+} 	

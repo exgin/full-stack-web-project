@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"> 
+        <title>ITFN 2214 Project</title>       
+
+        <!-- CSS file for fancybox lightbox -->
+        <link rel="stylesheet" type="text/css" href="css/jquery.fancybox.min.css">
+
+        <!-- links the javascript myFunction file -->
+        <script src="scripts/myFunction.js"></script>
+
+        <!-- CSS file for website -->
+        <link rel="stylesheet" type="text/css" href="css/intern.css">
+        <style>
+                .container{
+                    width: 70%;
+                    margin: auto;
+                    height: 100%;
+                }
+            .container-content{
+                font-size: 1.2em;
+                text-align:justify;
+            }
+            </style>
+    </head>
+
+    <body class="body" name="body" id="body">
+        <h1 class="banner">ITFN 1201 - Foundations of Database Design</h1>
+
+        <div class="nav" name="navi" id="navi">
+            <span class="menutitle">Menu Bar</span>
+
+            <a href="index.html" class="menusubtitle">Project Home</a>
+            <br>
+            <a href="MS01.html">Milestone 1</a>
+            <a href="MS02.html">Milestone 2</a>
+            <a href="MS03.html">Milestone 3</a>
+
+        </div>
+        <div class="goldline-box" name="goldline-box" id="goldline-box">
+                <span class="goldline" >Milestone 3 Deliverables | Leader: Samuel Reid</span>
+        </div><br><br>
+        <div class="container">
+
+            <!-- Content container Start Dellius -->
+                <div class="container-content">
+                    <h4>Employee Table Report</h4>    
+                    <p>Human Resources can use this report to keep track of all employees.</p>
+                    <a href="images/employee_table_report.jpg" data-fancybox data-caption="Employee Table Report"><img class="img" src="images/employee_table_report.jpg" title="Employee Table Report" alt="Employee Table Report"></a>
+                </div><br>	
+                <h3 class="h3">Report Processing Script</h3>
+                <div class="scrollbox">
+                    <pre>
+< ?php
+include 'includes/inc_config.php';
+include 'includes/inc_functions.php';
+
+echo get_table_data($conn,"SELECT * FROM EMPLOYEE;");
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!function_exists('get_table_data'))
+{
+    /**
+    * The get_table_data function takes a query and connection variable
+    * and returns the results of the query as specified by the query
+    * in the form of a table.
+    * @param $conn  The connection variable
+    * @param $query The MySQL query string
+    * @return $table The table of the query results
+    */
+    function get_table_data($conn, $query="")
+    {
+    /* check for connection erro*/
+    if ($conn->connect_errno) 
+    {
+        printf("Connect failed: %s\n", $conn->connect_error);
+        exit();
+    } // check if results set not empty or for error
+    else if((@$result = $conn->query($query)) == false)
+    {
+        die("No records matching your query were found.");
+    }     
+    $col_count = $conn->field_count;
+    $row_count = $result->num_rows;
+    /* Get field information for all columns */
+    $finfo = $result->fetch_fields();
+    $table = "< table>"."< tr>";
+    foreach($finfo as &$val) // build table header using field names
+        {
+        $table.= "< th class='table-header' >".$val->name."</ tr>";
+    
+        }
+        $table .= "</ tr>";
+        while ($row = $result->fetch_assoc()) // build table data fields row by row
+        {
+        $table.= "< tr>";
+        foreach ($row as $field)
+        {
+            $table.= "< td class='table-field' >".$field. "</ tr>";
+        } 
+        $table.= "</ tr>";
+        }
+    return $table .= "</ tr>";  // return completed table
+    }
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+? > 
+                    </pre>
+                </div><br><br>
+             <!-- Content container End -->
+             <!-- Content container Start -->
+             <div class="container-content">
+                    <h4>Project Table Report</h4>    
+                    <p>Good way to keep track of each projects progress.</p>
+                    <a href="images/project_table_report.jpg" data-fancybox data-caption="Project Table Report"><img class="img" src="images/project_table_report.jpg" title="Project Table Report" alt="Project Table Report"></a>
+                </div><br>	
+                <h3 class="h3">Report Processing Script</h3>
+                <div class="scrollbox">
+                    <pre>
+include 'includes/inc_config.php';
+include 'includes/inc_functions.php';
+
+echo get_table_data($conn,"SELECT * FROM PROJECTS;");
+                    </pre>
+                </div><br><br>
+             <!-- Content container End -->
+             <!-- Content container Start -->
+             <div class="container-content">
+                    <h4>Department Table Report</h4>    
+                    <p>This report displays all current departments, location and phone information.</p>
+                    <a href="images/department_table_report.jpg" data-fancybox data-caption="Department Table Report"><img class="img" src="images/department_table_report.jpg" title="Department Table Report" alt="Department Table Report"></a>
+                </div><br>	
+                <h3 class="h3">Report Processing Script</h3>
+                <div class="scrollbox">
+                    <pre>
+include 'includes/inc_config.php';
+include 'includes/inc_functions.php';
+
+echo get_table_data($conn,"SELECT * FROM DEPARTMENT;");  
+                    </pre>
+                </div><br><br>
+             <!-- Content container End -->
+             <!-- Content container Start -->
+             <div class="container-content">
+                    <h4>Assignment Table Report</h4>    
+                    <p>This is a report management may use to monitor hours worked on each project.</p>
+                    <a href="images/assignment_table_report.jpg" data-fancybox data-caption="Assignment Table Report"><img class="img" src="images/assignment_table_report.jpg" title="Assignment Table Report" alt="Assignment Table Report"></a>
+                </div><br>	
+                <h3 class="h3">Report Processing Script</h3>
+                <div class="scrollbox">
+                    <pre>
+include 'includes/inc_config.php';
+include 'includes/inc_functions.php';
+
+echo get_table_data($conn,"SELECT * FROM ASSIGNMENT;");   
+                    </pre>
+                </div><br><br>
+             <!-- Content container End -->
+             <!-- Content container Start -->
+             <div class="container-content">
+                    <h4>Employee Project Assignment Report</h4>    
+                    <p>This report depicts current project assignment.  It provides useful information about each project, such as, the employee information, start and end date, hours worked, total hours worked and average hours worked.</p>
+                    <a href="images/employee_project_assignment_report.jpg" data-fancybox data-caption="Employee Project Assignment Report"><img class="img" src="images/employee_project_assignment_report.jpg" title="Employee Project Assignment Report" alt="Employee Project Assignment Report"></a>
+                </div><br>	
+                <h3 class="h3">Report Processing Script</h3>
+                <div class="scrollbox">
+                    <pre>
+< ?php
+/**
+* @author Dellius Alexander
+*/
+include 'includes/inc_config.php';
+include 'includes/inc_functions.php';
+
+echo get_col_dropdown($conn,"ProjectName","PROJECT");
+
+if(isset($_POST["submit"]))
+{
+    include 'project_report.php'; 
+}
+
+
+$errorCounter = 0;
+$passCounter = 0;
+$total_hours = 0;
+if ($_SERVER["REQUEST_METHOD"] == "POST") 
+{    
+    // Test Position
+    if (empty($_POST["ProjectName"]))
+    {
+        $projNameErr = "Project Name is required!";
+        $errorCounter++;
+    }
+    else if (!preg_match("/^(\d*\D*\s)$/", $_POST["ProjectName"]) == 0)
+    {
+        die("Must match pattern: alpha and/or numeric characters, and white space allowed!");
+        $errorCounter++;
+    }
+    else
+    {
+        $projname = test_input($_POST["ProjectName"]);
+        $passCounter++;
+    }
+    // Display Report by Project Name
+    if($passCounter > 0)
+    {                
+        $query = "SELECT ProjectName, P.Department, EmployeeNumber, LastName, FirstName,  OfficePhone, P.ProjectID,  MaxHours, StartDate, EndDate, HoursWorked FROM PROJECT AS P JOIN (SELECT E.EmployeeNumber, A.HoursWorked, A.ProjectID, FirstName, LastName, Department, Position, OfficePhone, EmailAddress FROM ASSIGNMENT AS A JOIN EMPLOYEE AS E ON 	 A.EmployeeNumber = E.EmployeeNumber) AS AE ON P.ProjectID = AE.ProjectID WHERE ProjectName LIKE '%$projname%' ORDER BY HoursWorked;";
+        /* check connection */
+        @$result = $conn->query($query);
+        if ($conn->connect_errno) 
+        {
+            printf("Connect failed: %s\n", $conn->connect_error);
+            exit();
+        }
+        else if($result === false)
+        {
+            die("No records matching your query were found.");
+        }                       
+        else if ($result > 0)
+        {
+            $row_counter = 0; 
+            echo "< table>";
+                echo "< tr>";
+                    echo "< th class='table-header' >Project ID</ th>";
+                    echo "< th class='table-header' >Project Name</ th>";
+                    echo "< th class='table-header' >Department</ th>";
+                    echo "< th class='table-header' >Employee Number</ th>";
+                    echo "< th class='table-header' >First Name</ th>";
+                    echo "< th class='table-header' >Last Name</ th>";
+                    echo "< th class='table-header' >OfficePhone</ th>";
+                    //echo "< th class='table-header' >Max Hours</ th>";
+                    echo "< th class='table-header' >Start Date</ th>";
+                    echo "< th class='table-header' >End Date</ th>";
+                    echo "< th class='table-header' >Hours Worked</ th>";
+                echo "</ tr>";
+        
+            while($row = $result->fetch_assoc())
+            {
+                $total_hours += $row['HoursWorked'];
+                ++$row_counter;
+                echo "< tr>";
+                    echo "< td class='table-field' >" . $row['ProjectID'] . "</ td>";
+                    echo "< td class='table-field' >" . $row['ProjectName'] . "</ td>";
+                    echo "< td class='table-field' >" . $row['Department'] . "</ td>";
+                    echo "< td class='table-field' >" . $row['EmployeeNumber'] . "</ td>";
+                    echo "< td class='table-field' >" . $row['FirstName'] . "</ td>";
+                    echo "< td class='table-field' >" . $row['LastName'] . "</ td>";
+                    echo "< td class='table-field' >" . $row['OfficePhone'] . "</ td>";
+                    //echo "< td class='table-field' >" . $row['MaxHours'] . "</ td>";
+                    echo "< td class='table-field' >" . $row['StartDate'] . "</ td>";
+                    echo "< td class='table-field' >" . $row['EndDate'] . "</ td>";
+                    echo "< td class='table-field' >" . $row['HoursWorked'] . "</ td>";
+                echo "</ tr>";
+            }
+            echo "< tr>";
+            echo "< th class='table-header' >Total Hours Worked</ th>";
+            echo "< td class='table-field' >$total_hours</ td>";
+            echo "</ tr>";
+            echo "< tr>";
+            echo "< th class='table-header' >Average Hours Worked</ th>";
+            echo "< td class='table-field' >".$total_hours/$row_counter."</ td>";
+            echo "</ tr>";
+            echo "</ table>";
+            mysqli_free_result($result);
+        } 
+    }
+}
+?> 
+                    </pre>
+                </div><br><br>
+             <!-- Content container End -->
+             <!-- Content container Start -->
+             <div class="container-content">
+                    <h4>Budget Code Report</h4>    
+                    <p>
+                        The report budget code displays the department's specific budget corresponding to the department</p>
+                    <a href="images/departmentbudreport.PNG" data-fancybox data-caption="Budget Code Report"><img class="img" src="images/departmentbudreport.PNG" title="Budget Code Report" alt="Budget Code Report"></a>
+                </div><br>	
+                <h3 class="h3">Report Processing Script</h3>
+                <div class="scrollbox">
+                    <pre>
+< ?php
+
+$sql = "SELECT BudgetCode, DepartmentName, DepartmentPhone FROM department";
+$result = mysqli_query($conn, $sql) or die ("Bad Query: $sql");
+
+//Creating a table for our department table
+
+    echo"< table border = '5'>";
+    echo"< tr>
+    < th class ='table-header'>< strong>BudgetCode</ strong></ td>
+    < th class ='table-header'>< strong>DepartmentName</ strong></ td>
+    < th class ='table-header'>< strong>DepartmentPhone</ strong></ td>
+    < tr>";
+//Printing out each row in the query
+while($row = mysqli_fetch_assoc($result)){
+        echo"< tr>
+            < td class ='table-data'>{$row['BudgetCode']}</ td>
+            < td class ='table-data'>{$row['DepartmentName']}</ td>
+            < td class ='table-data'>{$row['DepartmentPhone']}</ td>
+        < tr>";
+    }
+?>
+    </ form>
+                    </pre>
+                </div><br><br>
+             <!-- Content container End -->
+             <!-- Content container Start -->
+             <div class="container-content">
+                    <h4>Enoch Place Heading Title Here</h4>    
+                    <p>Place Paragraph Description Here</p>
+                    <a href="" data-fancybox data-caption=""><img class="img" src="" title="" alt=""></a>
+                </div><br>	
+                <h3 class="h3">Report Processing Script</h3>
+                <div class="scrollbox">
+                    <pre>
+                          Pre-formatted content  
+                    </pre>
+                </div><br><br>
+                <!-- Content container End -->
+                <!-- Content container Start -->
+                <div class="container-content">
+                    <h4>Hours Worked By Project Report</h4>    
+                    <p>This form allows the user to enter an employee's number and in return the report gives all projects the employee is assigned 
+                            to and the hours worked in each project.</p>
+                    <a href="images/report_assign.PNG" data-fancybox data-caption="Hours Worked By Project Report"><img class="img" src="images/report_assign.PNG" title="Hours Worked By Project Report" alt="Hours Worked By Project Report"></a>
+                </div><br>	
+                <h3 class="h3">Report Processing Script</h3>
+                <div class="scrollbox">
+                    <pre>
+                          
+< ?php
+// Rather than follow the Reinforcement Exercise 8.1 exactly,
+// This code assumes the guestbook schema and visitors table
+// have been created using MySQL Workbench.
+
+$empErr = "";
+$EmployeeNumber = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $empErr = "";
+    $EmployeeNumber = "";
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+}
+
+$TableName = "ASSIGNMENT";
+
+if (empty($_POST["EmployeeNumber"])) {        // Test $empnum	
+    $empErr = "Employee Number is required!";
+} else if (!preg_match("/^[1-9][0-9]?$|^20$[:]^[\\w ]+$/", $_POST["EmployeeNumber"])) {
+    $empErr = "Invalid Input!";
+} else {
+    $EmployeeNumber = test_input($_POST["EmployeeNumber"]);
+}
+$TableName = "ASSIGNMENT";
+$SQLstring = "SELECT ProjectID, EmployeeNumber, HoursWorked  
+            FROM  $TableName  
+            WHERE (EmployeeNumber='$EmployeeNumber')";
+$QueryResult = $conn->query($SQLstring);
+
+// If you want to display the results one by one
+
+//Creating a table for our department table
+echo "< p>If info entered does not match database there will be no information found.</p>";
+echo "< table border = '3'>";
+echo "< tr>
+                < td>ProjectID</ td>
+                < td>EmpolyeeNumber</ td>
+                < td>HoursWorked</ td>
+                < tr>";
+//Printing out each row in the query
+while ($row = mysqli_fetch_assoc($QueryResult)) {
+    echo "< tr>
+                    < td>{$row['ProjectID']}</ td>
+                    < td>{$row['EmployeeNumber']}</ td>
+                    < td>{$row['HoursWorked']}</ td>
+                    < tr>";
+}
+                    </pre>
+                </div><br><br>
+             <!-- Content container End -->
+             
+        </div>
+         <!-- JS -->
+		<script src="scripts/jquery-3.3.1.min.js"></script> 
+		<script src="scripts/jquery.fancybox.min.js"></script>
+    </body>
+</html>

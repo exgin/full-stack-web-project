@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+
+		<meta charset="utf-8"> 
+        <title>ITFN 2214 Project</title>       
+        <!-- CSS file for website -->
+        <link rel="stylesheet" type="text/css" href="css/intern.css">
+        <!-- CSS file for fancybox lightbox -->
+        <link rel="stylesheet" type="text/css" href="css/jquery.fancybox.min.css">
+        <!-- links the javascript myFunction file -->
+        <script src="scripts/myFunction.js"></script>
+       
+    </head>
+
+    <body class="body" name="body" id="body">
+        <h1 class="banner" >ITFN 1201 - Foundations of Database Design</h1>
+
+        <div class="nav" name="navi" id="navi">
+            <span class="menutitle">Menu Bar</span>
+
+            <a href="index.html" class="menusubtitle">Project Home</a>
+            <br>
+            <a href="MS01.html">Milestone 1</a>
+            <a href="MS02.html">Milestone 2</a>
+            <a href="MS03.html">Milestone 3</a>
+
+        </div>
+        
+        <div class="goldline-box" name="goldline-box" id="goldline-box">
+            <span class="goldline" > Milestone 1 Deliverables | Leader: Anthony Martin</span>
+        </div><br><br>
+        
+        <div class="container">    
+            <h2 >
+                ANALYSIS OF PROBLEMS and/or OPPORTUNITIES:
+            </h2>
+            <ul>
+                </li><br>
+                <li>
+                    <p>The business Objectives of WP:</p>
+                    <ul><br>
+                        <li>
+                            To sell drone aircraft to their client
+                        </li>
+                        <li>
+                            To produce drone parts and supplies to their clients
+                        </li>
+                        <li>
+                            To ensure clients are excited with their drones during the Christmas season
+                        </li>
+                        <li>
+                            <p>To ensure that clients are satisfied with all the three drone types manufactured.  That is tangible items:</p>
+                            <ul>
+                                <li>
+                                    Alpha III
+                                </li>
+                                <li>
+                                    Bravo III
+                                </li>
+                                <li>
+                                    Delta IV
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li><br>
+                <li>
+                    <p>The client &#39;s organization is The Wedgewood Pacific Company (WP). The personnel in this company include the following:</p>
+                    <ul><br>
+                        
+                        1.	Mary Jacobs<br>
+                        2.	Rosalie Jackson<br>
+                        3.	Richard Bandalone<br>
+                        4.	George Smith<br>
+                        5.	Alan Adams<br>
+                        6.	Ken Evens<br>
+                        7.	Mary Abernathy<br> 
+                        8.	Tom Caruthers<br>
+                        9.	Heather Jones<br>
+                        10.	Ken Numoto<br>
+                        11.	Linda Granger<br>
+                        12.	James Nestor<br>
+                        13.	Rick Brown<br>
+                        14.	Mike Nguyen<br>
+                        15.	Jason Sleeman<br>
+                        16.	Mary Smith<br>
+                        17.	Tom Jackson<br>
+                        18.	George Jones<br>
+                        19.	Julia Hayakawa<br>
+                        20.	Sam Stewart<br>
+                    </ul>
+                </li><br>
+                <li>
+                    <p>The list of forms below has been determine to be relevent to WP organization:</p>
+                    <ul><br>
+                        <li>
+                            Form to input an Employee
+                        </li>
+                        <li>
+                            Form to delete an Employee
+                        </li>
+                        <li>
+                            Form to Query Projects
+                        </li>
+                        <li>
+                            Form to update employee information
+                        </li>
+                        <li>
+                            Form to assign employees to a project
+                        </li>                       
+                    </ul>
+                </li>
+                <li>
+                    <p>Below are a collection of Reports determined to satisfy WP organization business needs: </p>
+                    <ul>
+                        <li>
+                            A report of hours Worked on each project by Department 
+                        </li>
+                        <li>
+                            A report comparing project duration 
+                        </li>
+                        <li>
+                            A report tracking the number of hours worked by each employee assigned to a given project.
+                        </li>
+                        <li>
+                            A report to show employees assigned to a given project
+                        </li>
+                        <li>
+                            A report to show how many projects an employee has been assigned
+                        </li>
+                    </ul>
+                </li>                 
+            </ul><br>
+
+            <h2>
+                DATABASE DEVELOPMENT PROPERTIES:
+            </h2>
+            <h3 class="h3">Relational Schema Diagram (RSD)<p style="font-size: .85rem;">(Click image to enlarge)</p></h3>
+            <!-- Begin image popup -->
+            <!-- popup image file -->
+            <div class="popup-img">
+				<a href="images/WP_RSDx2.png" data-fancybox data-caption="Relational Schema Diagram (RSD)"><img class="img" src="images/WP_RSD.png" title="Relational Schema Diagram (RSD)" alt="Relational Schema Diagram (RSD)"></a>
+            </div><br><br><br>			
+            <!--End image popup-->
+
+            <h3 class="h3">SQL DDL - Database Build Script</h3>
+            <div class="scrollbox"><pre>
+DROP TABLE IF EXISTS ASSIGNMENT;
+DROP TABLE IF EXISTS EMPLOYEE;
+DROP TABLE IF EXISTS PROJECT;
+DROP TABLE IF EXISTS DEPARTMENT;
+
+COMMIT;
+
+CREATE TABLE DEPARTMENT(
+            DepartmentName      Char(35) NOT NULL,
+            BudgetCode          Char(30) NOT NULL,
+            OfficeNumber        Char(15) NOT NULL,
+            DepartmentPhone     Char(12) NOT NULL,
+            CONSTRAINT          DEPARTMENT_PK PRIMARY KEY (DepartmentName)
+                    );
+            
+CREATE TABLE EMPLOYEE(
+            EmployeeNumber      Int NOT NULL AUTO_INCREMENT,
+            FirstName           Char(25) NOT NULL,
+            LastName            Char(25) NOT NULL,
+            Department          Char(35) NOT NULL DEFAULT 'Human Resources',
+            Position            Char(35) NULL,
+            Supervisor          Int NULL,
+            OfficePhone         Char(12) NULL,
+            EmailAddress        VarChar(100) NOT NULL UNIQUE,
+            CONSTRAINT          EMPLOYEE_PK PRIMARY KEY(EmployeeNumber)
+            ); 
+            
+CREATE TABLE PROJECT ( 
+            ProjectID           Int NOT NULL, 
+            ProjectName         Char(50) NOT NULL, 
+            Department          Char(35) NOT NULL, 
+            MaxHours            Decimal(8,2) NOT NULL DEFAULT 100, 
+            StartDate           Date NULL, 
+            EndDate             Date NULL, 
+            CONSTRAINT          PROJECT_PK PRIMARY KEY (ProjectID)			
+            );
+
+CREATE TABLE ASSIGNMENT ( 
+            ProjectID           Int NOT NULL, 
+            EmployeeNumber      Int NOT NULL, 
+            HoursWorked         Numeric(6,2) NULL, 
+            CONSTRAINT          ASSIGNMENT_PK PRIMARY KEY (ProjectID, EmployeeNumber)
+            );
+
+COMMIT;
+
+ALTER TABLE PROJECT ADD CONSTRAINT PROJ_DEPART_FK FOREIGN KEY(Department)
+REFERENCES DEPARTMENT(DepartmentName)
+ON DELETE NO ACTION
+ON UPDATE CASCADE;
+
+ALTER TABLE EMPLOYEE ADD CONSTRAINT EMP_DEPART_FK FOREIGN KEY(Department)
+REFERENCES DEPARTMENT(DepartmentName) 
+ON UPDATE CASCADE
+ON DELETE NO ACTION;
+
+ALTER TABLE EMPLOYEE ADD CONSTRAINT EMP_SUPER_FK FOREIGN KEY(Supervisor)
+REFERENCES EMPLOYEE(EmployeeNumber)
+ON UPDATE NO ACTION
+ON DELETE NO ACTION;
+
+ALTER TABLE ASSIGNMENT ADD CONSTRAINT ASSIGN_PROJ_FK FOREIGN KEY (ProjectID)
+REFERENCES PROJECT (ProjectID)
+ON UPDATE NO ACTION
+ON DELETE CASCADE;
+
+ALTER TABLE ASSIGNMENT ADD CONSTRAINT ASSIGN_EMP_FK FOREIGN KEY (EmployeeNumber)
+REFERENCES EMPLOYEE (EmployeeNumber)
+ON UPDATE NO ACTION
+ON DELETE NO ACTION;
+
+COMMIT;
+                </pre></div><br><br>
+
+            <h3 class="h3">SQL DDL - Load Data Script</h3>
+            <div class="scrollbox"><pre>
+/*****   DEPARTMENT DATA   ******************************************************/
+
+INSERT INTO DEPARTMENT VALUES('Administration', 'BC-100-10', 'BLDG01-210', '360-285-8100');
+INSERT INTO DEPARTMENT VALUES('Legal', 'BC-200-10', 'BLDG01-220', '360-285-8200');
+INSERT INTO DEPARTMENT VALUES('Human Resources', 'BC-300-10', 'BLDG01-230', '360-285-8300');
+INSERT INTO DEPARTMENT VALUES('Finance', 'BC-400-10', 'BLDG01-110', '360-285-8400');
+INSERT INTO DEPARTMENT VALUES('Accounting', 'BC-500-10', 'BLDG01-120', '360-285-8405');
+INSERT INTO DEPARTMENT VALUES('Sales and Marketing', 'BC-600-10', 'BLDG01-250', '360-287-8500');
+INSERT INTO DEPARTMENT VALUES('InfoSystems', 'BC-700-10', 'BLDG02-210', '360-287-8600');
+INSERT INTO DEPARTMENT VALUES('Research and Development', 'BC-800-10', 'BLDG02-250', '360-287-8700');
+INSERT INTO DEPARTMENT VALUES('Production', 'BC-900-10', 'BLDG02-110', '360-287-8800');
+
+COMMIT;
+
+/*****   EMPLOYEE DATA   ********************************************************/
+
+INSERT INTO EMPLOYEE (FirstName, LastName, Department, Position, OfficePhone, EmailAddress)
+    VALUES('Mary', 'Jacobs', 'Administration', 'CEO', '360-285-8110', 'Mary.Jacobs@WP.com');
+INSERT INTO EMPLOYEE (FirstName, LastName, Department, Position, Supervisor, OfficePhone, EmailAddress)
+    VALUES('Rosalie', 'Jackson', 'Administration', 'Admin Assistant', 1, '360-285-8120', 'Rosalie.Jackson@WP.com');
+INSERT INTO EMPLOYEE (FirstName, LastName, Department, Position, Supervisor, OfficePhone, EmailAddress)
+    VALUES('Richard', 'Bandalone', 'Legal', 'Attorney', 1, '360-285-8210', 'Richard.Bandalone@WP.com');
+INSERT INTO EMPLOYEE (FirstName, LastName, Department, Position, Supervisor, OfficePhone, EmailAddress)
+    VALUES('George', 'Smith', 'Human Resources', 'HR3', 1, '360-285-8310', 'George.Smith@WP.com');
+INSERT INTO EMPLOYEE (FirstName, LastName, Department, Position, Supervisor, OfficePhone, EmailAddress)
+    VALUES('Alan', 'Adams', 'Human Resources', 'HR1', 4, '360-285-8320', 'Alan.Adams@WP.com');
+INSERT INTO EMPLOYEE (FirstName, LastName, Department, Position, Supervisor, OfficePhone, EmailAddress)
+    VALUES('Ken', 'Evans', 'Finance', 'CFO', 1, '360-285-8410', 'Ken.Evans@WP.com');
+INSERT INTO EMPLOYEE (FirstName, LastName, Department, Position, Supervisor, OfficePhone, EmailAddress)
+    VALUES('Mary', 'Abernathy', 'Finance', 'FA3', 6, '360-285-8420', 'Mary.Abernathy@WP.com');
+INSERT INTO EMPLOYEE (FirstName, LastName, Department, Position, Supervisor, OfficePhone, EmailAddress)
+    VALUES('Tom', 'Caruthers', 'Accounting', 'FA2', 6, '360-285-8430', 'Tom.Caruthers@WP.com');
+INSERT INTO EMPLOYEE (FirstName, LastName, Department, Position, Supervisor, OfficePhone, EmailAddress)
+    VALUES('Heather', 'Jones', 'Accounting', 'FA2', 6, '360-285-8440', 'Heather.Jones@WP.com');
+INSERT INTO EMPLOYEE (FirstName, LastName, Department, Position, Supervisor, OfficePhone, EmailAddress)
+    VALUES('Ken', 'Numoto', 'Sales and Marketing', 'SM3', 1, '360-287-8510', 'Ken.Numoto@WP.com');
+INSERT INTO EMPLOYEE (FirstName, LastName, Department, Position, Supervisor, OfficePhone, EmailAddress)
+    VALUES('Linda', 'Granger', 'Sales and Marketing', 'SM2', 10, '360-287-8520', 'Linda.Granger@WP.com');
+INSERT INTO EMPLOYEE (FirstName, LastName, Department, Position, Supervisor, OfficePhone, EmailAddress)
+    VALUES('James', 'Nestor', 'InfoSystems', 'CIO', 1, '360-287-8610', 'James.Nestor@WP.com');
+INSERT INTO EMPLOYEE(FirstName, LastName, Department, Position, Supervisor, EmailAddress)
+    VALUES('Rick', 'Brown', 'InfoSystems', 'IS2', 12, 'Rick.Brown@WP.com');
+INSERT INTO EMPLOYEE (FirstName, LastName, Department, Position, Supervisor, OfficePhone, EmailAddress)
+    VALUES('Mike', 'Nguyen', 'Research and Development', 'CTO', 1, '360-287-8710', 'Mike.Nguyen@WP.com');
+INSERT INTO EMPLOYEE (FirstName, LastName, Department, Position, Supervisor, OfficePhone, EmailAddress)
+    VALUES('Jason', 'Sleeman', 'Research and Development', 'RD3', 14, '360-287-8720', 'Jason.Sleeman@WP.com');
+INSERT INTO EMPLOYEE (FirstName, LastName, Department, Position, Supervisor, OfficePhone, EmailAddress)
+    VALUES('Mary', 'Smith', 'Production', 'OPS3', 1, '360-287-8810', 'Mary.Smith@WP.com');
+INSERT INTO EMPLOYEE (FirstName, LastName, Department, Position, Supervisor, OfficePhone, EmailAddress)
+    VALUES('Tom', 'Jackson', 'Production', 'OPS2', 14, '360-287-8820', 'Tom.Jackson@WP.com');
+INSERT INTO EMPLOYEE (FirstName, LastName, Department, Position, Supervisor, OfficePhone, EmailAddress)
+    VALUES('George', 'Jones', 'Production', 'OPS2', 15, '360-287-8830', 'George.Jones@WP.com');
+INSERT INTO EMPLOYEE(FirstName, LastName, Department, Position, Supervisor, EmailAddress)
+    VALUES('Julia', 'Hayakawa', 'Production', 'OPS1', 15, 'Julia.Hayakawa@WP.com');
+INSERT INTO EMPLOYEE(FirstName, LastName, Department, Position, Supervisor, EmailAddress)
+    VALUES('Sam', 'Stewart', 'Production', 'OPS1', 15, 'Sam.Stewart@WP.com');
+
+COMMIT;
+
+/*****   PROJECT DATA   *********************************************************/
+
+INSERT INTO PROJECT VALUES(1000,'2017 Q3 Production Plan', 'Production', 100.00, '2017-05-10', '2017-06-15');
+INSERT INTO PROJECT VALUES(1100,
+    '2017 Q3 Marketing Plan', 'Sales and Marketing', 135.00, '2017-05-10', '2017-06-15');
+INSERT INTO PROJECT VALUES(1200,
+    '2017 Q3 Portfolio Analysis', 'Finance', 120.00, '2017-07-05', '2017-07-25');
+INSERT INTO PROJECT VALUES(1300,
+    '2017 Q3 Tax Preparation', 'Accounting', 145.00, '2017-08-10', '2017-10-15');
+INSERT INTO PROJECT VALUES(1400,
+    '2017 Q4 Production Plan', 'Production', 100.00, '2017-08-10', '2017-09-15');
+INSERT INTO PROJECT VALUES(1500,
+    '2017 Q4 Marketing Plan', 'Sales and Marketing', 135.00, '2017-08-10', '2017-09-15');
+INSERT INTO PROJECT (ProjectID, ProjectName, Department, MaxHours, StartDate)				
+    VALUES(1600,										
+    '2017 Q4 Portfolio Analysis', 'Finance', 140.00, '2017-10-05');	
+
+COMMIT;		
+
+/*****   ASSIGNMENT DATA   ******************************************************/
+
+INSERT INTO ASSIGNMENT VALUES(1000, 1, 30.0); 
+INSERT INTO ASSIGNMENT VALUES(1000, 6, 50.0);
+INSERT INTO ASSIGNMENT VALUES(1000, 10, 50.0);
+INSERT INTO ASSIGNMENT VALUES(1000, 16, 75.0);
+INSERT INTO ASSIGNMENT VALUES(1000, 17, 75.0);
+INSERT INTO ASSIGNMENT VALUES(1100, 1, 30.0);
+INSERT INTO ASSIGNMENT VALUES(1100, 6, 75.0);
+INSERT INTO ASSIGNMENT VALUES(1100, 10, 55.0);
+INSERT INTO ASSIGNMENT VALUES(1100, 11, 55.0);
+INSERT INTO ASSIGNMENT VALUES(1200, 3, 20.0);
+INSERT INTO ASSIGNMENT VALUES(1200, 6, 40.0);
+INSERT INTO ASSIGNMENT VALUES(1200, 7, 45.0);
+INSERT INTO ASSIGNMENT VALUES(1200, 8, 45.0);
+INSERT INTO ASSIGNMENT VALUES(1300, 3, 25.0);
+INSERT INTO ASSIGNMENT VALUES(1300, 6, 40.0);
+INSERT INTO ASSIGNMENT VALUES(1300, 8, 50.0);
+INSERT INTO ASSIGNMENT VALUES(1300, 9, 50.0);
+INSERT INTO ASSIGNMENT VALUES(1400, 1, 30.0);
+INSERT INTO ASSIGNMENT VALUES(1400, 6, 50.0);
+INSERT INTO ASSIGNMENT VALUES(1400, 10, 50.0);
+INSERT INTO ASSIGNMENT VALUES(1400, 16, 75.0);
+INSERT INTO ASSIGNMENT VALUES(1400, 17, 75.0);
+INSERT INTO ASSIGNMENT VALUES(1500, 1, 30.0);
+INSERT INTO ASSIGNMENT VALUES(1500, 6, 75.0);
+INSERT INTO ASSIGNMENT VALUES(1500, 10, 55.0);
+INSERT INTO ASSIGNMENT VALUES(1500, 11, 55.0);
+INSERT INTO ASSIGNMENT VALUES(1600, 3, 20.0);
+INSERT INTO ASSIGNMENT VALUES(1600, 6, 40.0);
+INSERT INTO ASSIGNMENT VALUES(1600, 7, 45.0);
+INSERT INTO ASSIGNMENT VALUES(1600, 8, 45.0);
+
+COMMIT;
+            </pre></div><br><br>
+            <h3 class="h3">
+                SQL DML - Testing Table Constraints
+            </h3>  
+           
+            <div class="popup-img">
+                <h4>Testing Employee Table OfficePhone Datatype Size Constraint:
+                    <p style="font-size: .85rem;">(Click image to enlarge)</p>
+                </h4>
+				<a  data-fancybox data-caption="Testing Employee Table OfficePhone Datatype Size Constraint" href="images/EmployeeDatatypeSizeConstraintTest.PNG"><img class="img" src="images/EmployeeDatatypeSizeConstraintTest.PNG" title="Testing Employee Table OfficePhone Datatype Size Constraint" alt="Testing Employee Table OfficePhone Datatype Size Constraint"></a>
+            </div><br><br>		
+            <!--End image popup-->  
+             <!-- popup image file -->
+             <div class="popup-img">
+                <h4>Testing Employee Table Unique Value E-mail Address Constraint:
+                    <p style="font-size: .85rem;">(Click image to enlarge)</p>
+                </h4>
+				<a href="images/EmployeeUniqueValueConstraintTest.PNG" data-fancybox data-caption="Testing Employee Table Unique Value E-mail Address Constraint" ><img class="img" src="images/EmployeeUniqueValueConstraintTest.PNG" title="Testing Employee Table Unique Value E-mail Address Constraint" alt="Testing Employee Table Unique Value E-mail Address Constraint"></a>
+            </div><br><br>		
+            <!--End image popup-->   
+            <!-- popup image file -->
+             <div class="popup-img">
+                <h4>Testing Project Table Alter Table Constraint On Update No Action:
+                    <p style="font-size: .85rem;">(Click image to enlarge)</p>
+                </h4>
+				<a href="images/TestingProjectTableAlterTableConstraintOnUpdateNoAction.png" data-fancybox data-caption="Testing Project Table Alter Table Constraint On Update No Action" ><img class="img" src="images/TestingProjectTableAlterTableConstraintOnUpdateNoAction.png" title="Testing Project Table Alter Table Constraint On Update No Action" alt="Testing Project Table Alter Table Constraint On Update No Action"></a>
+            </div><br><br>		
+            <!--End image popup -->
+            <!-- popup image file -->          
+             <div class="popup-img">
+                <h4>Testing Project Table Alters Table Constraint for Deparment Table Department Name Value:
+                    <p style="font-size: .85rem;">(Click image to enlarge)</p>
+                </h4>
+				<a href="images/TestingProjectTableAlterConstraintDepartmentNameOnDeleteNoAction.png" data-fancybox data-caption="Testing Project Table Alters Table Constraint for Deparment Table Department Name Value" ><img class="img" src="images/TestingProjectTableAlterConstraintDepartmentNameOnDeleteNoAction.png" title="Testing Project Table Alters Table Constraint for Deparment Table Department Name Value" alt="Testing Project Table Alters Table Constraint for Deparment Table Department Name Value"></a>
+            </div><br><br>		
+            <!--End image popup -->
+            
+            <!-- popup image file -->
+            <div class="popup-img">
+                <h4>Testing Employee Table Department Foreign Key Constraint:
+                    <p style="font-size: .85rem;">(Click image to enlarge)</p>
+                </h4>
+				<a href="images/Department_Foreign_Key1.png" data-fancybox data-caption="Testing Employee Table Department Foreign Key Constraint" ><img class="img" src="images/Department_Foreign_Key1.png" title="Testing Employee Table Department Foreign Key Constraint" alt="Testing Employee Table Department Foreign Key Constraint"></a>
+            </div><br><br>		
+            <!--End image popup-->
+            <!-- popup image file -->
+            <div class="popup-img">
+                <h4>Testing Employee Table Department Default Value for Department Name Constraint:
+                    <p style="font-size: .85rem;">(Click image to enlarge)</p>
+                </h4>
+                <a href="images/Default_Dept_Test_Employee_Table_.png" data-fancybox data-caption="Testing Employee Table Department Default Value for Department Name Constraint"><img class="img" src="images/Default_Dept_Test_Employee_Table_.png" title="Testing Employee Table Department Default Value for Department Name Constraint" alt="Testing Employee Table Department Default Value for Department Name Constraint"></a>
+            </div><br><br>		
+            <!--End image popup-->
+            <!-- popup image file -->
+            <div class="popup-img">
+                <h4>Testing Assignment Table Alter Table Constraint 'On Delete Cascade' ProjectID Value:
+                    <p style="font-size: .85rem;">(Click image to enlarge)</p>
+                </h4>
+				<a href="images/TestingProjectTableAlterTableConstraintOnDeleteCascade.png" data-fancybox data-caption="Testing Assignment Table Alter Table Constraint 'On Delete Cascade' ProjectID Value" ><img class="img" src="images/TestingProjectTableAlterTableConstraintOnDeleteCascade.png" title="Testing Assignment Table Alter Table Constraint 'On Delete Cascade' ProjectID Value" alt="Testing Assignment Table Alter Table Constraint 'On Delete Cascade' ProjectID Value"></a>
+            </div><br><br>		
+            <!--End image popup-->
+             <!-- popup image file -->
+             <div class="popup-img">
+                <h4>Testing Assignment Table Project ID Constraint:
+                    <p style="font-size: .85rem;">(Click image to enlarge)</p>
+                </h4>
+				<a href="images/Test_ProjectID_Constraint.png" data-fancybox data-caption="Testing Assignment Table Project ID Constraint" ><img class="img" src="images/Test_ProjectID_Constraint.png" title="Testing Assignment Table Project ID Constraint" alt="Testing Assignment Table Project ID Constraint"></a>
+            </div><br><br>		
+            <!--End image popup-->  
+             <!-- popup image file -->
+             <div class="popup-img">
+                <h4>Testing Department Table Duplicate Primary Key Constraint:
+                    <p style="font-size: .85rem;">(Click image to enlarge)</p>
+                </h4>
+                <a href="images/DuplicateValueKeyTestDeparmentTable.PNG" data-fancybox data-caption="Testing Department Table Duplicate Primary Key Constraint"><img class="img" src="images/DuplicateValueKeyTestDeparmentTable.PNG" title="Testing Department Table Duplicate Primary Key Constraint" alt="Testing Department Table Duplicate Primary Key Constraint"></a>
+            </div><br><br>		
+            <!--End image popup-->
+             <!-- popup image file -->
+             <div class="popup-img">
+                <h4>Testing Department Table Not Null Constraint:
+                    <p style="font-size: .85rem;">(Click image to enlarge)</p>
+                </h4>
+                <a href="images/TestingDepartmentTbaleNotNullField.PNG" data-fancybox data-caption="Testing Department Table  Not Null Constraint"><img class="img" src="images/TestingDepartmentTbaleNotNullField.PNG" title="Testing Department Table  Not Null Constraint" alt="Testing Department Table  Not Null Constraint"></a>
+            </div><br><br>		
+            <!--End image popup-->
+            <!-- popup image file -->
+            <div class="popup-img">
+                <h4>Testing Department Table DepartmentPhone size Constraints:
+                    <p style="font-size: .85rem;">(Click image to enlarge)</p>
+                </h4>
+                <a href="images/Department_phone_length.png" data-fancybox data-caption="Testing Department Table DepartmentPhone size Constraints"><img class="img" src="images/Department_phone_length.png" title="Testing Department Table DepartmentPhone size Constraints" alt="Testing Department Table DepartmentPhone size Constraints"></a>
+            </div><br><br>		
+            <!--End image popup-->
+                        <!-- popup image file -->
+             <div class="popup-img">
+                <h4>Testing Deparment Referential Integrity ON UPDATE CASCADE:
+                    <p style="font-size: .85rem;">(Click image to enlarge)</p>
+                </h4>
+				<a href="images/TestingDepartmentPrimaryKeyAlterConstraint.png" data-fancybox data-caption="Testing Deparment Referential Integrity ON UPDATE CASCADE" ><img class="img" src="images/TestingDepartmentPrimaryKeyAlterConstraint.png" title="Testing Deparment Referential Integrity ON UPDATE CASCADE" alt="Testing Deparment Referential Integrity ON UPDATE CASCADE"></a>
+            </div><br><br>	
+            <!--End image popup-->
+            <!-- popup image file -->
+            <div class="popup-img">
+                <h4>Testing Assignment Table HoursWorked size Constraint:
+                    <p style="font-size: .85rem;">(Click image to enlarge)</p>
+                </h4>
+                <a href="images/Test_HoursWorked_Size_Constraint.png" data-fancybox data-caption="Testing Assignment Table HoursWorked size Constraint"><img class="img" src="images/Test_HoursWorked_Size_Constraint.png" title="Testing Assignment Table HoursWorked size Constraint" alt="Testing Assignment Table HoursWorked size Constraint"></a>
+            </div><br><br>		
+            <!--End image popup-->
+            <!-- popup image file -->
+            <div class="popup-img">
+                <h4>Testing Assignment Table ProjectID Constraint:
+                    <p style="font-size: .85rem;">(Click image to enlarge)</p>
+                </h4>
+                <a href="images/Test_ProjectID_Constraint.png" data-fancybox data-caption="Testing Assignment Table ProjectID Constraint"><img class="img" src="images/Test_ProjectID_Constraint.png" title="Testing Assignment Table ProjectID Constraint" alt="Testing Assignment Table ProjectID Constraint"></a>
+            </div><br><br>		
+            <!--End image popup-->
+           
+            <!-- popup image file -->
+            <div class="popup-img">
+                <h4>Testing Assignment Table HoursWorked Data Type Constraint:
+                    <p style="font-size: .85rem;">(Click image to enlarge)</p>
+                </h4>
+                <a href="images/TestingAssignmentDataType.PNG" data-fancybox data-caption="Testing Assignment Table HoursWorked Data Type Constraint"><img class="img" src="images/TestingAssignmentDataType.PNG" title="Testing Assignment Table HoursWorked Data Type Constraint" alt="Testing Assignment Table HoursWorked Data Type Constraint"></a>
+            </div><br><br>		
+            <!--End image popup-->
+           
+             <!-- popup image file -->
+             <div class="popup-img">
+                <h4>Testing Assignment Table Duplicate Composite Key Constraint:
+                    <p style="font-size: .85rem;">(Click image to enlarge)</p>
+                </h4>
+                <a href="images/TestingDuplicateOnAssignmentTable.PNG" data-fancybox data-caption="Testing Department Table Duplicate Composite Key Constraint"><img class="img" src="images/TestingDuplicateOnAssignmentTable.PNG" title="Testing Department Table Duplicate Composite Key Constraint" alt="Testing Department Table Duplicate Composite Key Constraint"></a>
+            </div><br><br>		
+            <!--End image popup-->
+
+            <div class="popup-img">
+                    <h4>Testing Employee Table Select All Constraint:
+                        <p style="font-size: .85rem;">(Click image to enlarge)</p>
+                    </h4>
+                    <a  data-fancybox data-caption="Testing Employee Table Select All Constraint" href="images/Select_All_Employee_Constraint.PNG"><img class="img" src="images/Select_All_Employee_Constraint.PNG" title="Testing Employee Table Select All Constraint" alt="Testing Employee Table Select All Constraint"></a>
+                </div><br><br>
+                
+            <div class="popup-img">
+                    <h4>Testing Project Table Select All Constraint:
+                         <p style="font-size: .85rem;">(Click image to enlarge)</p>
+                    </h4>
+                    <a  data-fancybox data-caption="Testing Project Table Select All Constraint" href="images/Select_All_Project_Constraint.PNG"><img class="img" src="images/Select_All_Project_Constraint.PNG" title="Testing Project Table Select All Constraint" alt="Testing Project Table Select All Constraint"></a>
+                </div><br><br>
+
+             <div class="popup-img">
+                    <h4>Testing Assignment Table Select All Constraint:
+                        <p style="font-size: .85rem;">(Click image to enlarge)</p>
+                    </h4>       
+                     <a  data-fancybox data-caption="Testing Assignment Table Select All Constraint" href="images/Select_All_Assignment_Constraint.PNG"><img class="img" src="images/Select_All_Assignment_Constraint.PNG" title="Testing Assignment Table Select All Constraint" alt="Testing Assignment Table Select All Constraint"></a>
+                </div><br><br>
+
+             <div class="popup-img">
+                    <h4>Testing Deparment Table Select All Constraint:
+                        <p style="font-size: .85rem;">(Click image to enlarge)</p>
+                    </h4>  
+                    <a  data-fancybox data-caption="Testing Department Table Select All Constraint" href="images/Select_All_Department_Constraint.PNG"><img class="img" src="images/Select_All_Department_Constraint.PNG" title="Testing Deaprtment Table Select All Constraint" alt="Testing Department Table Select All Constraint"></a>
+                </div><br><br>
+
+        </div>
+        <!-- JS -->
+		<script src="scripts/jquery-3.3.1.min.js"></script> 
+		<script src="scripts/jquery.fancybox.min.js"></script>	
+    </body>
+</html>

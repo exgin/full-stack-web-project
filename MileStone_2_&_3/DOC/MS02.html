@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"> 
+        <title>ITFN 2214 Project</title>       
+
+        <!-- CSS file for fancybox lightbox -->
+        <link rel="stylesheet" type="text/css" href="css/jquery.fancybox.min.css">
+
+        <!-- links the javascript myFunction file -->
+        <script src="scripts/myFunction.js"></script>
+
+        <!-- CSS file for website -->
+        <link rel="stylesheet" type="text/css" href="css/intern.css">
+        <style>
+            .container{
+                width: 70%;
+                margin: auto;
+                height: 100%;
+            }
+        .container-content{
+            font-size: 1.2em;
+            text-align:justify;
+        }
+        </style>
+
+    </head>
+
+    <body class="body" name="body" id="body">
+        <h1 class="banner">ITFN 1201 - Foundations of Database Design</h1>
+
+        <div class="nav" name="navi" id="navi">
+            <span class="menutitle">Menu Bar</span>
+
+            <a href="index.html" class="menusubtitle">Project Home</a>
+            <br>
+            <a href="MS01.html">Milestone 1</a>
+            <a href="MS02.html">Milestone 2</a>
+            <a href="MS03.html">Milestone 3</a>
+
+        </div>
+        <div class="goldline-box" name="goldline-box" id="goldline-box">
+                <span class="goldline" > Milestone 2 Deliverables | Leader: Dellius Alexander</span>
+        </div><br><br> 
+        <div class="container">
+<!-- Create and Update Department Information -->
+                <div class="container-content">
+                    <h4>Create and Update Department Information </h4>    
+                    <p>The intentions of this from is to input criteria based on the Department Table within the WPC Database. Also, the form is used to help the ease of creating or updating departments.
+                    Addtionally, the form is desgined to insert necessary values to change the intended value(s): 
+                    <i>"Department Name, Department Phone, Office Number, & Budget Code".</i>
+                    With these implications, new data should be ready to become accessed inside of the WPC Database.</p><br>
+                    <p>Update Department Form</p>
+                    <a href="images/formpicture.PNG" data-fancybox data-caption="Department Form"><img class="img" src="images/formpicture.PNG" title="Department Form" alt="Department Form"></a>
+                   
+                </div><br>	
+                <h3 class="h3">Update Department Form Processing</h3>
+                <div class="scrollbox">
+                    <pre>
+                    
+// @author Samuel
+
+// define variables and set to empty values
+$deptnameErr = $deptphoneErr = $budcodeErr = $officenumErr = "";
+$deptname = $deptphone = $budcode = $officenum = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+
+    if (empty($_POST["deptname"])) {
+    $deptnameErr = "**A department name is required**";
+    } else {
+    $deptname = test_input($_POST["deptname"]);
+    if (!preg_match("/^[a-zA-Z ]*$/", $deptname)){
+        $deptnameErr = "Please only enter letters & white space.";
+    }
+    }
+
+    if (empty($_POST["budcode"])) {
+    $budcodeErr = "**A budget code is required**";
+    } else {
+    $budcode = test_input($_POST["budcode"]);
+    if (!preg_match("/^[BC]+-[0-9][0-9][0-9]+-[0-9][0-9]*$/", $budcode)){
+        $budcodeErr = "Please follow the correct format 'BC-000-00'";
+    }
+    }
+
+    if (empty($_POST["officenum"])){
+        $officenumErr = "**A office number is required**";
+    }	else { 
+        $officenum = test_input($_POST["officenum"]);
+        if (!preg_match("/^[BLDG0-9]+-[0-9][0-9][0-9]*$/", $officenum)){
+            $officenumErr = "Please follow the corect format 'BLDG00-000'";
+        }
+    }
+
+    if (empty($_POST["deptphone"])){
+    $deptphoneErr = "**A department number is required**";
+}	else { 
+    $deptphone = test_input($_POST["deptphone"]);
+    if(!preg_match("/^[1-9][0-9]{0,10}$/", $deptphone)){
+        $deptphoneErr = "Please enter only (9) numbers, not extention needed.";
+    }
+}
+
+}
+
+echo "< h5>User Input</ h5>";
+echo $deptname;
+echo "< br>";
+echo $deptphone;
+echo "< br>";
+echo $budcode;
+echo "< br>";
+echo $officenum;
+//Connecting to DB & Printing Results
+
+
+//					$connect = mysqli_connect("localhost", "root", "", "wp") or die ("Couldn't connect.");
+$sql = "select * from DEPARTMENT;";
+if(($result = $conn->query($sql)) == 0){
+    die ("Bad Query: $sql");
+}
+//Creating a table for our department table
+echo "< h2>Department Table</ h2>";
+echo"< table border = '2'>";
+echo"< tr>
+    < td>DepartmentName</ td>
+    < td>BudgetCode</ td>
+    < td>OfficeNumber</ td>
+    < td>DepartmentPhone</ td>
+    < tr>";
+//Printing out each row in the query
+while($row = mysqli_fetch_assoc($result)){
+    echo"< tr>
+        < td>{$row['DepartmentName']}</ td>
+        < td>{$row['BudgetCode']}</ td>
+        < td>{$row['OfficeNumber']}</ td>
+        < td>{$row['DepartmentPhone']}</ td>
+        < tr>";
+}
+                    </pre></div><br><br>
+    
+<!-- Project Assignment Form -->
+                <div class="container-content">
+                    <h4>Project Assignment Form</h4>    
+                    <p>This form is used to assign or re-assign an employee to a specific project.</p>
+                    
+                    <p>Project Assignment Form</p>
+                    <a  data-fancybox data-caption="Project Assignment Form" href="images/dellius_img_form.jpg"><img class="img" src="images/dellius_img_form.jpg" title="Project Assignment Form" alt="Project Assignment Form"></a><br><br>
+                </div>
+                    <!-- Scrollbox Start -->
+                    <h3 class="h3">Project Assignment Form Processing</h3>
+                    <div class="scrollbox">
+<pre>
+/** 
+* @author Dellius Alexander
+*/
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(($_SERVER["REQUEST_METHOD"])== "POST" && isset($_POST["update"]))
+{    
+    // Input and Error variables are set to empty values
+
+    $empErr = $fnameErr = $lnameErr =  $deptErr = $phoneErr = $projIdErr = $positionErr =  $projNameErr = "";
+
+    $empnum = $lname = $fname = $dept = $phone = $projid = $position = $projname  = "";
+    $errorCounter = 0;
+    $passCounter = 0;
+    $totalCount = 0;
+
+    $name_regex = "/^[a-zA-Z']+$/";
+    $phone_regex = "/^(\d){3}\D?(\d){3}\D?(\d){4}$/";
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    global $empErr, $fnameErr, $lnameErr,  $deptErr, $phoneErr, $projIdErr, $positionErr,  $projNameErr;
+    global $empnum, $lname, $fname, $dept, $phone, $projid, $position, $projname;
+    global $errorCounter, $passCounter, $totalCount;
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    if (empty($_POST["EmployeeNumber"])) 
+    {		// Test $empnum	
+        $empErr = "Employee Number is required!< br/>";
+        $errorCounter++;
+        $empnum="";
+    } 
+    else if (!preg_match("/[0-9]+/",$_POST["EmployeeNumber"]))
+    {
+        $empErr = "Only number and no white space allowed!< br/>";
+        $errorCounter++;
+        $empnum="";
+    }
+    else
+    {
+        $empnum = test_input($_POST["EmployeeNumber"]);
+        $passCounter++;				
+    }   
+    // Test FirstName
+    if (empty($_POST["FirstName"])) {
+        $fnameErr = "First Name is required!< br/>";
+        $errorCounter++;
+    } 
+    else if (!preg_match($name_regex, $_POST["FirstName"]))
+    {
+        $fnameErr = "Only letters and white space allowed!< br/>";
+        $errorCounter++;
+    }
+    else
+    {
+        $fname = test_input($_POST["FirstName"]);
+        $passCounter++;
+    }
+    // Test Last Name			
+    if (empty($_POST["LastName"])) 
+    {
+        $lnameErr = "Last Name is required!< br/>";
+        $errorCounter++;
+    } 
+    else if (!preg_match($name_regex, $_POST["LastName"]))
+    {
+        $lnameErr = "Only letters and white space allowed!< br/>";
+        $errorCounter++;	
+    }
+    else
+    {
+        $lname = test_input($_POST["LastName"]);
+        $passCounter++;
+    }					   
+    // Test Department
+    if (empty($_POST["DepartmentName"])) 
+    {
+        $deptErr = "Department is required!< br/>";
+        $errorCounter++;
+    }
+    else if (!preg_match($name_regex, $_POST["DepartmentName"]))
+    {
+        $deptErr = "Only letters and white space allowed!< br/>";	
+        $errorCounter++;
+    }
+    else
+    {
+        $dept = test_input($_POST["DepartmentName"]);
+        $passCounter++;
+    }
+    // Test Office phone
+    if (empty($_POST["OfficePhone"]))
+    {
+        $phoneErr = "Office phone is required!< br/>";
+        $errorCounter++;
+    }
+    else if (!preg_match($phone_regex, $_POST["OfficePhone"]))
+    {
+        $phoneErr = "Office Phone must be numbers only and may be separaged by hyphen or white space allowed!< br/>";
+        $errorCounter++;
+    }
+    else
+    {
+        $phone = test_input($_POST["OfficePhone"]);
+        $passCounter++;
+    }
+    // Test ProjectID
+    if (empty($_POST["ProjectID"]))
+    {
+        $projIdErr = "Project ID is required!< br/>";
+        $errorCounter++;
+    }
+    else if (!preg_match("/^([0-9]+)$/", $_POST["ProjectID"]))
+    {
+        $projIdErr = "Must match pattern: [[0-9]] no white space allowed!< br/>";
+        $errorCounter++;
+    }
+    else
+    {
+        $projid = test_input($_POST["ProjectID"]);
+        $passCounter++;
+    }
+    // Test Position
+    if (empty($_POST["Position"])){
+        $positionErr = "Position is required!< br/>";
+        $errorCounter++;
+    }
+    else if (!preg_match($name_regex, $_POST["Position"]))
+    {
+        $positionErr = "Only letters and white space allowed!< br/>";
+        $errorCounter++;
+    }
+    else
+    {
+        $position = test_input($_POST["Position"]);
+        $passCounter++;
+    }
+    // Test ProjectName
+    if (empty($_POST["ProjectName"]))
+    {
+        $projNameErr = "Project Name is required!< br/>";
+        $errorCounter++;
+    }
+    else if (!preg_match("/^(\d*\D*\s*)$/", $_POST["ProjectName"]) == 0)
+    {
+        $projNameErr = "Must match pattern: alpha and/or numeric characters, and white space allowed!<br/>";
+        $errorCounter++;
+    }
+    else
+    {
+        $projname = test_input($_POST["ProjectName"]);
+        $passCounter++;
+    }
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+    $old_project_name = get_field_value($conn, "SELECT ProjectName FROM PROJECT WHERE ProjectID='$projid';");
+    $new_projID = get_field_value($conn, "SELECT ProjectID FROM PROJECT WHERE ProjectName='$projname';");
+    $new_projID = test_input($new_projID);
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    if($passCounter > 0)
+    {
+        $projectID_results = $conn->query(" SELECT ProjectID 
+            FROM ASSIGNMENT 
+            WHERE EmployeeNumber='$empnum';");
+        $assigned_counter = 0;
+        $not_assigned_counter=0;
+        $total_assignments = 0;
+        $index = 0;
+        $count = count($crnt_emp_proj_asgmt_arr = $projectID_results->fetch_array());
+        /**
+        * $crnt_emp_proj_asgmt_arr : an array that contain all employee's current project assignment by project ID
+        */
+        $projAssignErr = $dupEntryErr = $crntProjErr = "";
+        while($index < $count) 
+        {
+            if($projid == $new_projID) // check for duplicate entries
+            {
+                ++$assigned_counter;
+                $dupEntryErr = "Error...You entered duplicate entries for current and new project assignments...Review your choices and try again...< br/>";
+            }
+            if($new_projID == $crnt_emp_proj_asgmt_arr[$index]) // check for duplicate assignments
+            {
+                ++$assigned_counter;
+                $projAssignErr = "This project is already assigned to employee!!!  Select another project...<br/>";
+            }
+            if($projid != $crnt_emp_proj_asgmt_arr[$index]) // verify if old project selected is assigned to employee
+            {
+                ++$not_assigned_counter;
+            }
+            if($count == $not_assigned_counter)
+            { // verifies, if the "Project Name" of the "Select Current Project Assignment" field is in fact assigned to employee, if not assigned then display error message
+                $crntProjErr ="Error...<strong>Current Project Assignment</strong> selected not currently assigned to employee...Review your current project choices...Employee was never assigned ".$old_project_name." project...< br/>";
+            }
+            ++$index;
+        } // End of while loop        
+    }   
+}                             
+                        </pre>
+                    </div><br><br>
+                    <!-- Scrollbox End -->
+                    <!-- Scrollbox Start -->
+                    <h3 class="h3">Search Box Processing</h3>
+                    <div class="scrollbox">
+                        <pre>
+/**
+* @author Dellius Alexander
+*/
+< div class="form-search">
+        <//?php echo "< hr />"; include 'form_search.php'; echo "< hr />";?> 
+</ div>	
+
+include 'includes/inc_functions.php';
+include 'includes/inc_config.php';
+include 'process_form_input.php';
+
+/* Testing search input value */
+$searchErr = $search_term = "";
+$search_errorCounter = 0;
+
+    if (empty($_POST["search"]))
+    {
+        $searchErr = "Sorry... Search box is empty!\nPlease enter a search keyword or value...";
+        $search_errorCounter++;
+    }
+    else if (!preg_match("/[A-Za-z0-9\-\.]+/",$_POST["search"]))
+    {
+        $searchErr = "Only letter, numbers, all non characters and no white space allowed!\nYou can only search one keyword at a time!";
+        $search_errorCounter++;
+    }
+    else
+    {
+        $search_term = test_input($_POST["search"]);
+    }
+    global $search_errorCounter, $search_term;
+    
+if($search_errorCounter == 0)
+{
+    $results = search_db($search_term,$conn);  /* Query the database for the search term and get all rows that have a column that matches the search term; return the results to variable $results   */
+    if(!$results === false)
+    {
+        if(mysqli_num_rows($results) > 0)
+        {
+            echo "< div >";
+            echo "< table>";
+            echo "< tr>";
+                echo "< th class='table-header' >Employee Number</ th>";
+                echo "< th class='table-header' >First Name</ th>";
+                echo "< th class='table-header' >Last Name</ th>";
+                echo "< th class='table-header' >Department</ th>";
+                echo "< th class='table-header' >Position</ th>";
+                echo "< th class='table-header' >OfficePhone</ th>";
+                echo "< th class='table-header' >Project ID</ th>";
+                echo "< th class='table-header' >Project Name</ th>";
+                echo "< th class='table-header' >Max Hours</ th>";
+                echo "< th class='table-header' >Start Date</ th>";
+                echo "< th class='table-header' >End Date</ th>";
+                echo "< th class='table-header' >Hours Worked</ th>";
+            echo "</ tr>";
+            while($row = mysqli_fetch_array($results))
+            {
+                echo "< tr>";
+                    echo "< td class='table-field'>" . $row['EmployeeNumber']. "</ td>";
+                    echo "< td class='table-field'>" . $row['FirstName']. "</ td>";
+                    echo "< td class='table-field'>" . $row['LastName'] . "</ td>";
+                    echo "< td class='table-field'>" . $row['Department'] . "</ td>";
+                    echo "< td class='table-field'>" . $row['Position'] . "</ td>";
+                    echo "< td class='table-field'>" . $row['OfficePhone'] . "</ td>";
+                    echo "< td class='table-field'>" . $row['ProjectID'] . "</ td>";
+                    echo "< td class='table-field'>" . $row['ProjectName'] . "</ td>";
+                    echo "< td class='table-field'>" . $row['MaxHours'] . "</ td>";
+                    echo "< td class='table-field'>" . $row['StartDate'] . "</ td>";
+                    echo "< td class='table-field'>" . $row['EndDate'] . "</ td>";
+                    echo "< td class='table-field'>" . $row['HoursWorked'] . "</ td>";
+                echo "</ tr>";
+            }
+        echo "</ table>";
+        echo "< div >";
+        }
+        else
+        {
+            $searchErr = 'Sorry... No results found for search keywork... "'.$search_term.'"';
+            $search_errorCounter = 0;
+        }
+    }
+}
+echo "< br />";
+echo "< h4 class='error'>$searchErr</ h4>";
+// End search Test
+                        </pre>
+                    </div><br><br>
+                    <!-- Scrollbox End -->
+                    <!-- Scrollbox Start -->
+                    <h3 class="h3">Form Results Processing</h3>
+                    <div class="scrollbox">
+                        <pre>
+/**
+* @author Dellius Alexander
+* Update Query Variable
+*/
+< div class="iframe-results">
+    < ?php  // Displays Search or Form results
+        if(isset($_POST["submit-search"]) && $errorCounter == 0)
+        {
+            include 'search_results.php';
+        }
+        else if(isset($_POST["update"]) && $passCounter == 8)
+        {	
+            include 'form_results.php';								
+        }
+    ? >
+< / div>	
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+if($errorCounter == 0)
+{
+    /***********Update Query Syntax********************************************************************\
+     *        
+     * UPDATE table_name
+     * SET column1=value, column2=value2,...
+     * WHERE some_column=some_value
+     * 
+     * UPDATE ASSIGNMENT    
+     * SET ProjectID='1000',
+     * HoursWorked='50.00'
+     * WHERE EmployeeNumber='1' AND ProjectID='1600';
+     **************************************************************************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*********************** Updating the EMPLOYEE & ASSIGNMENT Tables ************************************/
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+$upd_emp_asgmt_sql_qry ="   UPDATE ASSIGNMENT  as A, 
+                                EMPLOYEE as E
+                            SET E.FirstName='$fname',
+                                E.LastName='$lname',
+                                E.Department='$dept',
+                                E.OfficePhone='$phone',
+                                E.Position='$position',
+                                A.ProjectID='$new_projID'
+                            WHERE A.EmployeeNumber='$empnum' 
+                            AND A.ProjectID='$projid' 
+                            AND E.EmployeeNumber='$empnum';";
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+    if(($result = $conn->query($upd_emp_asgmt_sql_qry)) == false)
+    {  /* Ok...If you have made it this far pass all the validation and your parameters are correct, the only possible error i can thing of you may have is a mismatch */
+        die("< p>Project ID & Project Name Mismatch...".$conn->connect_error."</ p>");
+    }
+    else
+    { // Displaying results and input back to client display on include statement
+        echo "< h2>Tables updated successfully!!!</ h2>";
+        echo "< pre style='text-align:left; font-size:1.5em; padding-top:50px;'>";
+        echo "Employee Number:	".$empnum ."< br>";
+        echo "First Name:      	".$fname."< br>";
+        echo "Last Name:        	".$lname."< br>";
+        echo "Department:   		".$dept."< br>";
+        echo "Phone:			".$phone."< br>";
+        echo "Old Project Assignment: ".$old_project_name."< br>";
+        echo "Position:  		".$position."< br>";
+        echo "New Project Assignment: ".$projname."< br>";
+        echo "< br>";
+        echo "< br>";
+        echo "< hr />";
+        echo "A total of $errorCounter input values have failed validation.< br />";
+        echo "A total of $passCounter input values have passed validation.";
+        echo "</ pre>";
+        /////////////// Display Results from Database to verify changes ////////////////////////////////
+        /***********************************************************************************************/
+        echo "< div style='align-content:left;'>";
+        $sql_verify = " SELECT AP.ProjectID, ProjectName, LastName, FirstName, E.Department, StartDate, EndDate,                    HoursWorked
+                        FROM EMPLOYEE AS E JOIN 
+                        (SELECT EmployeeNumber, A.ProjectID, ProjectName, MaxHours, StartDate, EndDate, HoursWorked
+                        FROM ASSIGNMENT AS A JOIN PROJECT AS P ON A.ProjectID = P.ProjectID) AS AP ON AP.EmployeeNumber = E.EmployeeNumber
+                        WHERE E.EmployeeNumber='1';";
+        echo get_result_table($conn->query($sql_verify));        
+        echo "</ div>";
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+    }
+}
+$conn->close();
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+                        </pre>
+                    </div><br><br>
+                    <!-- Scrollbox End -->
+                    <!-- Scrollbox Start -->
+                    <h3 class="h3">inc_functions.php</h3>
+                    <div class="scrollbox">
+                        <pre>
+/**
+* @author Dellius Alexander
+*/
+/* VARIABLE DECLARATIONS */
+$email_regex2 = '"/^\w+([.-]?\w+)*" . "@\w+([.-]?\w+)*" . "(\.\w{2,3})+$/"';
+$email_regex1 = '"/^([A-Za-z]+\d+)|" . ""/';
+$wp_email_regex = "/^(([a-zA-Z']+ \d*) |" . "([a-zA-Z]+ \. [a-zA-Z]+))" . "@((\w\.)? WP\.com $/";
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Wild card search returns all values in the database that meets the regex
+$wildcard_search_query = "SELECT ProjectID, ProjectName, E.EmployeeNumber, LastName, FirstName, Department, E.Position, OfficePhone, MaxHours, StartDate, EndDate, HoursWorked, 
+Supervisor, EmailAddress 
+    FROM EMPLOYEE AS E 
+    JOIN (SELECT EmployeeNumber, A.ProjectID, ProjectName, MaxHours, StartDate, EndDate, HoursWorked 
+        FROM ASSIGNMENT AS A 
+    JOIN PROJECT AS P 
+        ON A.ProjectID = P.ProjectID) AS AP ON AP.EmployeeNumber = E.EmployeeNumber
+    WHERE E.EmployeeNumber LIKE '%%' or LastName LIKE '%%' or FirstName LIKE '%%' or Department LIKE '%%' or ProjectID LIKE '%%' or ProjectName LIKE '%%' or MaxHours LIKE '%%' or StartDate LIKE '%%' or EndDate LIKE '%%' or HoursWorked LIKE '%%' or EmailAddress LIKE '%%' ORDER BY EmployeeNumber
+                        ;";
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+if (!function_exists('test_input'))
+{
+    /**
+    * Test the input
+    * trim(), stripslashes(),htmlspecialchars()
+    * @param  $data The data to be sanitized
+    * @return $data  The sanitized data
+    */
+    function test_input($data){
+    $data = trim($data);
+    $data = stripslashes($data);
+    return htmlspecialchars($data);
+    }
+} // End of test_input
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+if (!function_exists('get_column_name'))
+{
+    /**
+    * This function searches for the schema in which the specified column exists
+    * @param $conn The database connection variable
+    * @param $col_name The column name to search for
+    * @return $result  The results set returned from sql query containing the schema information
+    */
+    function get_column_name($conn="", $col_name="")
+    {
+
+    $query = "SELECT table_name, column_name from information_schema.columns WHERE column_name LIKE '%$col_name%';";
+    if(($result = $conn->query($query)) > 0)
+    {
+        return $result;
+    }
+    else
+    {
+        die("Unable to locate column in database, please try again!");
+    }
+    }
+    
+} // End of get_colomn_name
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+if (!function_exists('valid_email'))
+{
+    /**
+    * Validates the email address
+    * @param $wp_email_regex
+    * @param $str  The email address
+    */
+    function valid_email($str="", $wp_email_regex="") 
+    {
+    return preg_match($wp_email_regex="", $str="");
+    }
+} // End Of valid_email
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+if (!function_exists('valid_column'))
+{
+    /**
+    * Validates the column input value
+    * @param col_val The department value to be tested 
+    * @param Query    The query column returned
+    */
+    function valid_column($conn="",$col_val="", $Query="")
+    {
+    $n = 0;
+    $result = $conn->query($Query);
+        foreach($result as $val)
+        {
+        if($col_val != $val)
+        {
+            $n++;
+        }      
+        }
+        return ($n > 0) ? 1 : 0;
+    }
+} // End Of valid_column
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+if (!function_exists('get_emp_num_row'))
+{
+    /**
+    * Experimental function to get all values for one employee, given the EmployeeNumber
+    * @param $emp_num  The employee number
+    */
+    function get_emp_num_row($conn="",$emp_num = ""){
+    $get_employee_query = "SELECT EmployeeNumber, LastName, FirstName, P.Department, OfficePhone, P.ProjectID, ProjectName, MaxHours, StartDate, EndDate, HoursWorked FROM PROJECT AS P JOIN (SELECT E.EmployeeNumber, A.HoursWorked, A.ProjectID, FirstName, LastName, Department, Position, OfficePhone, EmailAddress FROM ASSIGNMENT AS A JOIN EMPLOYEE AS E ON 	 A.EmployeeNumber = E.EmployeeNumber) AS AE ON P.ProjectID = AE.ProjectID WHERE EmployeeNumber = $emp_num ORDER BY EmployeeNumber;";
+
+    // Check connection
+    if(!$conn){
+        die("ERROR: Could not connect. " . mysqli_connect_error());
+    }
+    else if(mysqli_num_rows($result = mysqli_query($conn, $get_employee_query)) > 0)
+        { 
+            while($row = mysqli_fetch_array($result)){
+            echo "< p>". $row['EmployeeNumber'] . "</ p>< br>";
+            echo $row['FirstName'] . "< br>";
+            echo $row['LastName'] . "< br>";
+            echo $row['Department']. "< br>";
+            echo $row['OfficePhone'] . "< br>";
+            echo $row['ProjectID'] . "< br>";
+            echo $row['ProjectName'] . "< br>";
+            echo $row['MaxHours'] . "< br>";
+            echo $row['StartDate'] . "< br>";
+            echo $row['EndDate'] . "< br>";
+            echo $row['HoursWorked'] . "< br>";
+        }
+    }
+    }
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+if (!function_exists('get_col_dropdown'))
+{
+    /**
+    * Gets one column of values from any table, displays dropdown
+    * @param $conn   The connection property
+    * @param $col    The column/field name
+    * @param $table  The table name
+    * @return $dropdown The column dropdown
+    */
+    function get_col_dropdown($conn="", $col="", $table="")
+    {    
+    $dropdown = "";
+    if ($conn->connect_errno) 
+    {
+        printf("Connect failed: %s\n", $conn->connect_error);
+        exit();
+    }
+    else if(($result = $conn->query("SELECT $col FROM $table ORDER BY  $col ASC;")) > 0) 
+    {
+        // printf("Select returned %d rows.\n\n", $result->num_rows);      
+        $dropdown = '< select class="form-content"  name="'.$col.'" >';
+        // Fetch one and one row
+            while($row=mysqli_fetch_row($result))
+            {
+            $dropdown .= '< option class="dropdown" name="'.$col.'" value="' .$row[0]. '">' . $row[0] . "</ option>";
+                }
+            $dropdown .= "</ select>";
+    }
+    else
+    {
+        echo "*****ERROR*****The search returned an empty array...!";
+    }  
+    return $dropdown;
+    }
+} // End Of get_col_dropdown
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+if (!function_exists('select_Timezone'))
+{
+    /**
+    * Returns a dropdown list of timezones
+    * @param $selected   The selected time zone
+    * @return $select    The time zone dropdown
+    */
+    function select_Timezone($selected = '') 
+    { 
+    
+        // Create a list of timezone 
+        $OptionsArray = timezone_identifiers_list(); 
+            $select= '< select name="SelectContacts"> 
+                        < option disabled selected> 
+                            Please Select Timezone 
+                        </ option>'; 
+            
+            while (list ($key, $row) = each ($OptionsArray) ){ 
+                $select .='< option value="'.$key.'"'; 
+                $select .= ($key == $selected ? : ''); 
+                $select .= '>'.$row.'</ option>'; 
+            }   
+        return $select; 
+    }
+} // End Of select_Timezone
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+if (!function_exists('search_db'))
+{
+    /**
+    * This search_db function searches the database for rows that match the search parameter.
+    * You may optionally include the table and connection variable
+    * @param $search_param   The search keyword
+    * @param $conn           The database connection variable
+    * @param $table          The table to search
+    * @return $result        The results of the search
+    */
+    function search_db($search_param="", $conn="", $table="")
+    {
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+    $param_search_query = "SELECT E.EmployeeNumber, LastName, FirstName, Department, E.Position, Supervisor,        OfficePhone, EmailAddress, AP.ProjectID, ProjectName, MaxHours, StartDate, EndDate, HoursWorked
+    FROM EMPLOYEE AS E JOIN 
+        (SELECT EmployeeNumber, A.ProjectID, ProjectName, MaxHours, StartDate, EndDate, HoursWorked
+            FROM ASSIGNMENT AS A JOIN PROJECT AS P ON A.ProjectID = P.ProjectID) AS AP ON AP.EmployeeNumber = E.EmployeeNumber
+    WHERE CAST(E.EmployeeNumber AS CHAR)  LIKE '%$search_param%' 
+        OR CAST(FirstName AS CHAR)  LIKE '%$search_param%' 
+        OR CAST(LastName AS CHAR)  LIKE '%$search_param%' 
+        OR CAST(E.Department AS CHAR)  LIKE '%$search_param%' 
+        OR CAST(E.Position AS CHAR)  LIKE '%$search_param%' 
+        OR CAST(Supervisor AS CHAR)  LIKE '%$search_param%' 
+        OR CAST(OfficePhone AS CHAR)  LIKE '%$search_param%' 
+        OR CAST(EmailAddress AS CHAR)  LIKE '%$search_param%'
+        OR CAST(AP.ProjectID AS CHAR)  LIKE '%$search_param%'
+        OR CAST(ProjectName AS CHAR)  LIKE '%$search_param%'
+        OR CAST(E.Department AS CHAR)  LIKE '%$search_param%'
+        OR CAST(MaxHours AS CHAR)  LIKE '%$search_param%'
+        OR CAST(StartDate AS CHAR)  LIKE '%$search_param%' 
+        OR CAST(EndDate AS CHAR)  LIKE '%$search_param%'
+        OR CAST(HoursWorked AS CHAR)  LIKE '%$search_param%' ORDER BY EmployeeNumber;";
+    $sql_search_table = "SELECT * FROM $table WHERE EmployeeNumber LIKE '%$search_param%';";
+    
+    /*****************************************************************/
+    
+    if($table == "")
+    {
+        if (($result=mysqli_query($conn, $param_search_query))>0) 
+        {               
+            return $result;      
+        }
+    }
+    else
+    { // Get all the values in a table if the selected column contains the wildcard value
+        if ($result=mysqli_query($conn, $sql_search_table))
+        {
+        return $result;       
+        }else{
+        die("Sorry zero results returned please try again!!!");
+        }
+    } // End of else    
+    }
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!function_exists('get_table_data'))
+{
+    /**
+    * The get_table_data function takes a query and connection variable
+    * and returns the results of the query as specified by the query
+    * in the form of a table.
+    * @param $conn  The connection variable
+    * @param $query The MySQL query string
+    * @return $table The table of the query results
+    */
+    function get_table_data($conn, $query="")
+    {
+    /* check for connection erro*/
+    if ($conn->connect_errno) 
+            {
+                printf("Connect failed: %s\n", $conn->connect_error);
+                exit();
+            } // check if results set not empty or for error
+            else if((@$result = $conn->query($query)) == false)
+            {
+                die("No records matching your query were found.");
+            }     
+            $col_count = $conn->field_count;
+            $row_count = $result->num_rows;
+            /* Get field information for all columns */
+            $finfo = $result->fetch_fields();
+            $table = "< table>"."< tr>";
+            foreach($finfo as &$val) // build table header using field names
+                {
+                $table.= "< th class='table-header' >".$val->name."</ th>";
+            
+                }
+                $table .= "</ tr>";
+                while ($row = $result->fetch_assoc()) // build table data fields row by row
+                {
+                $table.= "< tr>";
+                foreach ($row as $field)
+                {
+                    $table.= "< td class='table-field' >".$field. "</ td>";
+                } 
+                $table.= "</ tr>";
+                }
+            return $table .= "</ table>";  // return completed table
+    }
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!function_exists("get_field_value"))
+{
+    /**
+    * The get_field_value function gets the specified field value(S) given the correct parameters
+    * @param $conn The connection variable
+    * @param $query The MySQL Select statement
+    * @return mixed Returns a single field is queried, or returns a result set if more than one field is selected
+    */
+    function get_field_value($conn, $query)
+    {
+    $result = $conn->query($query);
+    
+    if($result === false)
+    {
+        die("No results returned from database...".$conn->connect_error);
+    }
+    else if(($conn->field_count) > 0)
+    {
+        $row = $result->fetch_array();
+        return $row[0];
+    }
+    else if(($conn->num_rows) > 1)	
+    {
+        return $result;
+    }      
+    }
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!function_exists("get_result_table"))
+{
+    /**
+    * The get_result_table() function accepts a result set from the
+    * mysqli_query() function and returns a table of the result set
+    * @param $result The results set from a mysql query
+    * @return $table A table of the result set
+    */
+    function get_result_table($result){
+        /* Get field information for all columns */
+        $finfo = $result->fetch_fields();
+        $table = "< table>"."< tr>";
+        foreach($finfo as &$val) // build table header using field names
+        {
+        $table.= "< th class='table-header' >".$val->name."</ th>";
+        
+        }
+        $table .= "</ tr>";
+        while ($row = $result->fetch_assoc()) // build table data fields row by row
+        {
+            $table.= "< tr>";
+            foreach ($row as $field)
+            {
+            $table.= "< td class='table-field' >".$field. "</ td>";
+            } 
+            $table.= "</ tr>";
+        }
+        return $table .= "</ table>";  // return completed table
+    }
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+if(!function_exists("resetFunction"))
+{
+    /**
+    * This function refreshes or resets the current webpage
+    */
+    function resetFunction()
+    {
+    header("refresh:0");
+    }	
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+?>
+                        </pre>
+                    </div><br><br>	
+                    <!-- Scrollbox End -->
+<!-- Select and Project Project Assignment: Anthony -->                	
+                <div class="container-content">
+                    <h4>Selection and Projection Project Assignment</h4>    
+                    <p>
+                            This form allows the user to input criteria for selection and projection.
+                    </p>
+                    <br><br>
+                    <a  data-fancybox data-caption="Select and Project Project Assignment" href="images/form_select_&_project_assign.PNG"><img class="img" src="images/form_select_&_project_assign.PNG" title="Select and Project Project Assignment" alt="Select and Project Project Assignment"></a>
+                </div><br>
+                <!-- Scroolbox Start -->
+                <h3 class="h3">Selection and Projection Form Processing</h3>
+                <div class="scrollbox">
+                    <pre>
+< ?php
+// Rather than follow the Reinforcement Exercise 8.1 exactly,
+// This code assumes the guestbook schema and visitors table
+// have been created using MySQL Workbench.
+$hoursErr = $empErr = $projIdErr = "";
+$EmployeeNumber = $ProjectID = $HoursWorked = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    $TableName = "ASSIGNMENT";
+
+    if (empty($_POST["EmployeeNumber"])) {        // Test $empnum	
+        $empErr = "Employee Number is required!";
+    } else if (!preg_match("/^[1-9][0-9]?$|^20$[:]^[\\w ]+$/", $_POST["EmployeeNumber"])) {
+        $empErr = "Invalid Input!";
+    } else {
+        $EmployeeNumber = test_input($_POST["EmployeeNumber"]);
+    }
+    // Test ProjectID
+    if (empty($_POST["ProjectID"])) {
+        $projIdErr = "Project ID is required!";
+    } else if (!preg_match("/^([0-9]+)$/", $_POST["ProjectID"])) {
+        $projIdErr = "Invalid Input!";
+    } else {
+        $ProjectID = test_input($_POST["ProjectID"]);
+    }
+
+    // Test HoursWorked
+    if (empty($_POST["HoursWorked"])) {
+        $hoursErr = "Hours Worked is required!";
+    } else if (!preg_match("/^[1-9][0-9]?$|^100$[:]^[\\w ]+$/", $_POST["HoursWorked"])) {
+        $hoursErr = "Invalid Input!";
+    } else {
+        $HoursWorked = test_input($_POST["HoursWorked"]);
+    }
+
+
+
+    $SQLstring = "SELECT ProjectID, EmployeeNumber, HoursWorked  
+            FROM  $TableName  
+            WHERE (HoursWorked='$HoursWorked' AND ProjectID='$ProjectID' AND EmployeeNumber='$EmployeeNumber')";
+    $QueryResult = $conn->query($SQLstring);
+
+
+
+    // If you want to display the results one by one
+
+
+    echo "< p>Most recent information found.</ p> </ br>";
+    echo "< table border = '3'>";
+    echo "< tr>
+                < td>ProjectID</ td>
+                < td>EmpolyeeNumber</ td>
+                < td>HoursWprked</ td>
+                < tr>";
+    //Printing out each row in the query
+    while ($row = mysqli_fetch_assoc($QueryResult)) {
+        echo "< tr>
+                    < td>{$row['ProjectID']}</ td>
+                    < td>{$row['EmployeeNumber']}</ td>
+                    < td>{$row['HoursWorked']}</ td>
+                    < tr>";
+    }
+}
+? >
+            </pre>
+        </div><br><br>
+        
+<!-- Form to add a new/update employee information: Enoch -->	
+                <div class="container-content">
+                    <h4>Form to add a new/update employee information</h4>    
+                    <p>
+                        This form is to add or update employee information in the database.
+                    </p>
+                    <br><br>
+                    <a  data-fancybox data-caption="Form to add a new/update employee information" href="images/form_page.png"><img class="img" src="images/form_page.png" title="Form to add a new/update employee information" alt="Form to add a new/update employee information"></a>
+                </div><br>
+                <h3 class="h3">Update Employee Form Processing</h3>
+                <div class="scrollbox">
+                    <pre>
+// @author Enoch
+
+echo '< pre>' . print_r($_POST, true) . '</ pre>'; 
+                    </pre></div><br><br>
+        </div>    
+            <!-- JS -->
+		<script src="scripts/jquery-3.3.1.min.js"></script> 
+		<script src="scripts/jquery.fancybox.min.js"></script>	 
+    </body>
+</html>
